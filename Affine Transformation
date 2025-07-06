@@ -1,0 +1,28 @@
+import cv2
+import numpy as np
+
+# Load the grayscale image
+image = cv2.imread(r"C:\Users\sanja\OneDrive\Pictures\Saved Pictures\question-5.png", cv2.IMREAD_GRAYSCALE)
+
+# Define three points in the source image
+rows, cols = image.shape
+pts1 = np.float32([[50, 50], [200, 50], [50, 200]])
+
+# Define where those points should map to in the transformed image
+pts2 = np.float32([[10, 100], [200, 50], [100, 250]])
+
+# Get the affine transform matrix
+M = cv2.getAffineTransform(pts1, pts2)
+
+# Apply the affine transformation
+affine_transformed = cv2.warpAffine(image, M, (cols, rows))
+
+# Apply Canny edge detection to transformed image
+edges = cv2.Canny(affine_transformed, threshold1=30, threshold2=100)
+
+# Display images
+cv2.imshow('Original Image', image)
+cv2.imshow('Affine Transformed Image', affine_transformed)
+cv2.imshow('Canny Edges after Affine Transformation', edges)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
