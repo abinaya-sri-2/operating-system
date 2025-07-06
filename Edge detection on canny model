@@ -1,0 +1,21 @@
+import cv2
+
+# Load the image in grayscale
+image = cv2.imread(r"C:\Users\sanja\OneDrive\Pictures\Saved Pictures\question-5.png", cv2.IMREAD_GRAYSCALE)
+
+# Check if image loaded successfully
+if image is None:
+    raise FileNotFoundError("Image not found at the specified path.")
+
+# Apply Gaussian Blur to reduce noise
+blurred = cv2.GaussianBlur(image, (5, 5), 1.4)
+
+# Apply Canny edge detection
+edges = cv2.Canny(blurred, threshold1=30, threshold2=100)
+
+# Display the results
+cv2.imshow('Original Image', image)
+cv2.imshow('Blurred Image', blurred)
+cv2.imshow('Canny Edge Detection', edges)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
